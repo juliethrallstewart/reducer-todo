@@ -7,40 +7,16 @@ import Filter from '../src/components/TodoComponents/Filter';
 import { initialState, itemReducer } from '../src/reducers/reducer';
 
 function App () {
-	// const [ state, dispatch ] = useReducer(itemReducer, initialState);
-	// console.log(state);
+	const [ state, dispatch ] = useReducer(itemReducer, initialState);
 
-	// toggleItem = (id) => {
-	// 	console.log(id);
-	// 	this.setState({
-	// 		toDoList : this.state.toDoList.map((item) => {
-	// 			if (item.id === id) {
-	// 				return {
-	// 					...item,
-	// 					completed : !item.completed
-	// 				};
-	// 			}
-	// 			else {
-	// 				return item;
-	// 			}
-	// 		})
-	// 	});
-	// };
+	const toggleItem = id => dispatch({ type: 'TOGGLE_ITEM', payload: id });
 
-	// addItem = (itemName) => {
-	// 	const newItem = {
-	//     item      : itemName,
-	//     completed : false,
-	// 		id        : Date.now(),
+	// const toggleItem = id => console.log(id);
 
-	// 	};
-	// };
+	const addTodo = item => dispatch({ type: 'ADD_TODO', payload: item });
 
-	// clearCompleted = () => {
-	// 	this.setState({
-	// 	});
-	// };
-
+	const clearCompleted = () => dispatch({ type: 'CLEAR_TODO' });
+	console.log(state, 'state');
 	return (
 		<div className="App">
 			<div className="header">
@@ -51,17 +27,11 @@ function App () {
 					<h1>My Todo List</h1>
 				</div>
 				<div className="input-add">
-					<TodoForm />
+					<TodoForm addTodo={addTodo} clear={clearCompleted} />
 				</div>
 			</div>
-			<TodoList
-			// toDoList={this.state.toDoList}
-			// toggleItem={this.toggleItem}
-			// clearCompleted={this.clearCompleted}
-			/>
-			{/* <SearchResults /> */}
+			<TodoList todoList={state.todoItems} toggle={toggleItem} />
 		</div>
 	);
 }
-
 export default App;
